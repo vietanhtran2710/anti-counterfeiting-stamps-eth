@@ -7,6 +7,10 @@ contract ACSAccessControl is AccessControl {
     bytes32 public constant CREATOR_ROLE = keccak256("CREATOR_ROLE");
     bytes32 public constant VALIDATOR_ROLE = keccak256("VALIDATOR_ROLE");
 
+    constructor() {
+        _setupRole(DEFAULT_ADMIN_ROLE, _msgSender());
+    }
+
     function addCreator(address _address) public {
         grantRole(CREATOR_ROLE, _address);
     }
@@ -46,6 +50,10 @@ contract ACSAccessControl is AccessControl {
         for (uint256 i = 0; i < _address.length; ++i) {
             revokeRole(VALIDATOR_ROLE, _address[i]);
         }
+    }
+
+    function isAdmin(address _address) public view returns (bool) {
+        return hasRole(DEFAULT_ADMIN_ROLE, _address);
     }
 
     function isCreator(address _address) public view returns (bool) {
