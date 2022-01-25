@@ -7,13 +7,16 @@ contract Stamp is ACSAccessControl {
     mapping(address => uint) private codeActivated;
     mapping(uint256 => address) private codeSerialNumber;
     uint256 currentSerialNumber;
+
+    event CreateSerialNumber(uint256 eventSerialNumber);
     
     function createCode(address hashCode) public onlyRole(CREATOR_ROLE) returns (uint256) {
         // address hashCode = address(bytes20(keccak256(code)));
-        require(codeActivated[hashCode] != 0, "This code is already created");
+        require(codeActivated[hashCode] == 0, "This code is already created");
         codeSerialNumber[currentSerialNumber] = hashCode;
         currentSerialNumber++;
         codeActivated[hashCode] = 1;
+        emit CreateSerialNumber(currentSerialNumber - 1);
         return currentSerialNumber - 1;
     }
  
@@ -41,7 +44,7 @@ contract Stamp is ACSAccessControl {
         return codeActivated[codeSerialNumber[serialNumber]] == 2;
     }
 
-    function isSerialValid(uint256 serialNumber) public view returns (bool) {
+    function isSerialNumberValid(uint256 serialNumber) public view returns (bool) {
         return serialNumber < currentSerialNumber;
     }
 

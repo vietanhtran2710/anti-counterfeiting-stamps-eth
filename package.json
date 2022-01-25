@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/vietanhtran2710/anti-counterfeiting-stamps-eth#readme",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.4.2"
+    "@openzeppelin/contracts": "^4.4.2",
+    "web3-utils": "^1.7.0"
   }
 }
