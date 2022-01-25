@@ -1,0 +1,25 @@
+{
+  "name": "anti-counterfeiting-stamps-eth",
+  "version": "1.0.0",
+  "description": "Smart Contracts for Electronic Anti-counterfeiting Stamps on Ethereum Blockchain",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vietanhtran2710/anti-counterfeiting-stamps-eth.git"
+  },
+  "author": "Viet Anh Tran",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vietanhtran2710/anti-counterfeiting-stamps-eth/issues"
+  },
+  "homepage": "https://github.com/vietanhtran2710/anti-counterfeiting-stamps-eth#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.4.2"
+  }
+}
