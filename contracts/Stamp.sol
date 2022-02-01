@@ -5,27 +5,22 @@ import "./ACSAccessControl.sol";
 
 contract Stamp is ACSAccessControl {
     mapping(address => uint) private codeActivated;
-    mapping(uint256 => address) private codeSerialNumber;
-    uint256 currentSerialNumber;
+    mapping(address => address) private codeSerialNumber;
 
-    event CreateSerialNumber(uint256 eventSerialNumber);
+    event CreateSerialNumber(address eventSerialNumber);
     
-    function createCode(address hashCode) public onlyRole(CREATOR_ROLE) returns (uint256) {
+    function createCode(address hashCode, address serialNumber) public onlyRole(CREATOR_ROLE) {
         // address hashCode = address(bytes20(keccak256(code)));
         require(codeActivated[hashCode] == 0, "This code is already created");
-        codeSerialNumber[currentSerialNumber] = hashCode;
-        currentSerialNumber++;
+        codeSerialNumber[serialNumber] = hashCode;
         codeActivated[hashCode] = 1;
-        emit CreateSerialNumber(currentSerialNumber - 1);
-        return currentSerialNumber - 1;
+        emit CreateSerialNumber(serialNumber);
     }
  
-    function createBatchCodes(address[] memory hashCode) public onlyRole(CREATOR_ROLE) returns (uint256[] memory) {
-        uint256[] memory serialNumbers = new uint256[](hashCode.length);
+    function createBatchCodes(address[] memory hashCode, address[] memory serialCode) public onlyRole(CREATOR_ROLE) {
         for (uint256 i = 0; i < hashCode.length; i++) {
-            serialNumbers[i] = createCode(hashCode[i]);
+            createCode(hashCode[i], serialCode[i]);
         }
-        return serialNumbers;
     }
 
     function isCodeActivated(address hashCode) public view returns (bool) {
@@ -40,12 +35,12 @@ contract Stamp is ACSAccessControl {
         codeActivated[hashCode] = 2; 
     }
 
-    function isSerialNumberActivated(uint256 serialNumber) public view returns (bool) {
+    function isSerialNumberActivated(address serialNumber) public view returns (bool) {
         return codeActivated[codeSerialNumber[serialNumber]] == 2;
     }
 
-    function isSerialNumberValid(uint256 serialNumber) public view returns (bool) {
-        return serialNumber < currentSerialNumber;
+    function isSerialNumberValid(address serialNumber) public view returns (bool) {
+        return codeSerialNumber[serialNumber] != address(0);
     }
 
 }

@@ -68,11 +68,9 @@ contract('Contracts', function (accounts) {
 
     it("Stamp test", async function() {
         let hashedStampCode = soliditySha3("ASJ1324CIS").substring(0, 42);
-        return stampInstance.createCode(hashedStampCode, {from: accounts[1]})
-        .then(function (result) {
-            assert.equal(0, result.logs[0]['args']['0']['words'][0], "Code ASJ1324CIS serial number should be 0");
-            return stampInstance.isCodeValid(hashedStampCode, {from: accounts[0]})
-        })
+        let hashedSerialNumber = soliditySha3("0001200015114").substring(0, 42);
+        await stampInstance.createCode(hashedStampCode, hashedSerialNumber, {from: accounts[1]})
+        return stampInstance.isCodeValid(hashedStampCode, {from: accounts[0]})
         .then(function (result) {
             assert.equal(1, result, "Code ASJ1324CIS should be valid");
             return stampInstance.isCodeActivated(hashedStampCode, {from: accounts[0]})
@@ -84,38 +82,32 @@ contract('Contracts', function (accounts) {
         })
         .then(function (result) {
             assert.equal(1, result, "Code ASJ1324CIS should be activated");
-            return stampInstance.isSerialNumberValid(0, {from: accounts[0]})
+            return stampInstance.isSerialNumberValid(hashedSerialNumber, {from: accounts[0]})
         })
         .then(function (result) {
-            assert.equal(1, result, "Serial number 0 should be valid");
-            return stampInstance.isSerialNumberActivated(0, {from: accounts[0]})
+            assert.equal(1, result, "Serial number 0001200015114 should be valid");
+            return stampInstance.isSerialNumberActivated(hashedSerialNumber, {from: accounts[0]})
         })
         .then(function (result) {
-            assert.equal(1, result, "Serial number 0 should be activated");
-            return stampInstance.isSerialNumberValid(1, {from: accounts[0]})
+            assert.equal(1, result, "Serial number 0001200015114 should be activated");
+            return stampInstance.isSerialNumberValid(soliditySha3("0001200015115").substring(0, 42), {from: accounts[0]})
         })
-        .then(function (result) {
-            assert.equal(0, result, "Serial number 1 should not be valid");
-            let hashedBatchCodes = [];
-            for (let item of ["A1238CA2SD", "AK2SXOS9WS", "AWICNW129A"]) {
-                hashedBatchCodes.push(soliditySha3(item).substring(0, 42));
+        .then(async function (result) {
+            assert.equal(0, result, "Serial number 0001200015115 should not be valid");
+            let hashedBatchCodes = []; let hashedSerialNumber = []
+            for (let item of [["A1238CA2SD", "0001300015116"], ["AK2SXOS9WS", "0001300013117"], ["AWICNW129A", "0001300015111"]]) {
+                hashedBatchCodes.push(soliditySha3(item[0]).substring(0, 42));
+                hashedSerialNumber.push(soliditySha3(item[1]).substring(0, 42));
             }
-            return stampInstance.createBatchCodes(hashedBatchCodes, {from: accounts[1]})
-        })
-        .then(function(result) {
-            let createdSerialNumber = [];
-            for (let bn of result.logs) {
-                createdSerialNumber.push(bn['args']['eventSerialNumber']['words'][0]);
-            }
-            assert.deepEqual([1, 2, 3], createdSerialNumber, "Serial numbers should be 1, 2, 3");
+            await stampInstance.createBatchCodes(hashedBatchCodes, hashedSerialNumber, {from: accounts[1]})
             return stampInstance.isCodeActivated(soliditySha3("A1238CA2SD").substring(0, 42))
         })
         .then(function(result) {
             assert.equal(0, result, "Code A1238CA2SD should not be activated")
-            return stampInstance.isSerialNumberActivated(1)
+            return stampInstance.isSerialNumberActivated(soliditySha3("0001300015116").substring(0, 42))
         })
         .then(function(result) {
-            assert.equal(0, result, "Serial number 1 should not be activated")
+            assert.equal(0, result, "Serial number 0001300015116 should not be activated")
         })
     })
     
