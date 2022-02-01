@@ -21,7 +21,7 @@ truffle deploy
 ```
 
 ## Stamp code hashing
-Before sending stamp code to the blockchain, the code need to be hashed and convert to a 20-bytes address by the following code for example:
+Before sending stamp code to the blockchain, the code need to be hashed and converted to a 20-bytes-address by the following code for example:
 
 ```javascript
 let hashedStampCode = soliditySha3("ASJ1324CIS").substring(0, 42);
