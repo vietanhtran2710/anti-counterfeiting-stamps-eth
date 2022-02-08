@@ -12,6 +12,7 @@ export class StampService {
   private contractAddress = environment.stampAssress;
   private contractABI = this.artifacts.abi;
   private adminAddress = environment.adminAddress;
+  private key = environment.key;
   private contract: any; 
 
   constructor() { 
@@ -87,6 +88,71 @@ export class StampService {
       .then(function(result) {
         return resolve(result);
       })
+    })
+  }
+
+  isCodeValid(code) {
+    let hashedCode = soliditySha3(code).substring(0, 42);
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.isCodeValid(hashedCode).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
+  isCodeActivated(code) {
+    let hashedCode = soliditySha3(code).substring(0, 42);
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.isCodeActivated(hashedCode).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
+  isSerialNumberValid(code) {
+    let hashedCode = soliditySha3(code).substring(0, 42);
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.isSerialNumberValid(hashedCode).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
+  isSerialNumberActivated(code) {
+    let hashedCode = soliditySha3(code).substring(0, 42);
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.isSerialNumberActivated(hashedCode).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
+  async activateCode(code) {
+    await this.initWeb3();
+    let hashedCode = soliditySha3(code).substring(0, 42);
+    const that = this;
+    const query = this.contract.methods.activateCode(hashedCode);
+    const encodedABI = query.encodeABI();
+    const signedTx = await this.web3.eth.accounts.signTransaction(
+      {
+        data: encodedABI,
+        from: this.adminAddress,
+        gas: 2000000,
+        to: this.contract.options.address,
+      },
+      this.key,
+      false,
+    );
+    return new Promise((resolve, reject) => {
+      return resolve(this.web3.eth.sendSignedTransaction(signedTx.rawTransaction));
     })
   }
 }

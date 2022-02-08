@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { CreatorComponent } from './creator/creator.component';
+import { ValidateComponent } from './validate/validate.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminComponent,
-    CreatorComponent
+    CreatorComponent,
+    ValidateComponent
   ],
   imports: [
     BrowserModule,

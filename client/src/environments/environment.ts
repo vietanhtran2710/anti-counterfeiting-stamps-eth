@@ -8,6 +8,7 @@ export const environment = {
   stampAssress: '0x389f82182390481b4EEAD962582a60e830A0A5eE',
   applicationID: '9TSk4vsJmWzR2ipxj2Ie16QCgOYCOVnMF81UPuaN',
   serverURL: 'https://kwuqcudkvkxr.usemoralis.com:2053/server',
+  key: 'fd9dadba71c6921da03c1b59a7c1d19532e0872164725f64fd5c0a2c4c60909a'
 };
 
 /*
