@@ -54,4 +54,26 @@ export class StampService {
       })
     })
   }
+
+  async isCreator(address) {
+    await this.initWeb3();
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.isCreator(address).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
+  async isValidator(address) {
+    await this.initWeb3();
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.isValidator(address).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
 }
