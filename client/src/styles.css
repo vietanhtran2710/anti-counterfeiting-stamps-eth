@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+
+html {
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%
+}
+
+html {
+  box-sizing: border-box
+}
+
+html {
+  font-size: 20px;
+  line-height: 30px
+}
+
+body {
+  margin: 0
+}
+
+body {
+  background: #fff;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased
+}
+
+body {
+  color: #6B7A90;
+  font-size: 1rem
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  font-family: "Heebo", sans-serif
+}
+
+body,
+  a,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6 {
+    transition: color .25s ease
+  } */
