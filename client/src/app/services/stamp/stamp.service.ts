@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import Moralis from 'moralis';
 import { environment } from 'src/environments/environment';
+const { soliditySha3 } = require("web3-utils");
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,18 @@ export class StampService {
     const that = this;
     return new Promise((resolve, reject) => {
       that.contract.methods.isValidator(address).call()
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
+  createStamp(code, serialNumber, currentAccount) {
+    let hashedCode = soliditySha3(code).substring(0, 42);
+    let hashedSerialNumber = soliditySha3(serialNumber).substring(0, 42);
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.contract.methods.createCode(hashedCode, hashedSerialNumber).send({from: currentAccount})
       .then(function(result) {
         return resolve(result);
       })

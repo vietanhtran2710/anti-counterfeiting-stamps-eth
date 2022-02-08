@@ -1,1 +1,120 @@
-<p>creator works!</p>
+<!-- <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet"> -->
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<div *ngIf="loaded" class="container-fluid">
+    <div class="row bg-title">
+        <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <h4 class="page-title">Creator Dashboard</h4>
+        </div>
+        <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+            <a (click)="logOut()" href="javascript:void(0);" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Log out</a>
+        </div>
+    </div>
+
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="white-box">
+                <h3 class="box-title">ETH Balance</h3>
+                <ul class="list-inline two-part">
+                    <li><i class="icon-user text-info"></i></li>
+                    <li class="text-right"><span class="counter text-info" id="totalUsers">{{balance}} ETH</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="white-box">
+                <a href="javascript:void(0);" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light" onclick="javascript:$('#bookModel').modal();">Create from File</a>
+                <h3 class="box-title">Items</h3>
+                <ul class="list-inline two-part">
+                    <li><i class="fa fa-briefcase text-purple"></i></li>
+                    <li class="text-right "><span class="counter text-purple">{{books.length}} BOOKS</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="white-box">
+                <a href="javascript:void(0);" class="btn btn-info pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light" onclick="javascript:$('#bookModel').modal();">Create Stamp</a>
+                <h3 class="box-title">Book stamps list</h3> 
+                <div class="table-responsive">
+                    <table class="table product-overview" id="adminCultivationTable">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>Serial Number</th>
+                                <th>Book Name</th>
+                                <th>QR Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                <tr *ngFor="let book of books">
+                                    <td>{{book.code}}</td>
+                                    <td>{{book.serialNumber}}</td>
+                                    <td>{{book.name}}</td>
+                                    <td>
+                                        <a  href={{book.transaction}} 
+                                            title={{book.transaction}} 
+                                            class="qr-code-magnify" data-effect="mfp-zoom-in">
+                                            <img src={{book.transaction}} 
+                                            class="img-responsive" style="width:30px; height:30px;">
+                                        </a>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="white-box">
+                <h3 class="box-title">Stamp Contract Address <i class="fa fa-qrcode fa-2x text-danger"></i></h3>
+                <ul class="list-inline two-part">
+                    <li class="text-right" id="stampAddress">{{stamp}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-6 col-xs-12">
+            <div class="white-box">
+                <h3 class="box-title">Your Address <i class="fa fa-qrcode fa-2x text-info"></i></h3>
+                <ul class="list-inline two-part">
+                    <li class="text-right" id="adminAddress">{{currentAccount}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="bookModel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none; padding-top: 170px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Add Book Stamp</h2>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label" for="bookCode">Stamp Code<i class="red">*</i></label>
+                    <input type="text" class="form-control" id="bookCode" name="bookCode"
+                    [(ngModel)]="bookInfo.code" #title="ngModel">
+                </div> 
+                <div class="form-group">
+                    <label class="control-label" for="bookSerialNumber">Serial Number<i class="red">*</i></label>
+                    <input type="text" class="form-control" id="bookSerialNumber" name="bookSerialNumber"
+                    [(ngModel)]="bookInfo.serialNumber" #description="ngModel">
+                </div> 
+                <div class="form-group">
+                    <label class="control-label" for="bookName">Name<i class="red">*</i></label> <br>
+                    <input type="text" id="bookName" name="bookName"
+                    [(ngModel)]="bookInfo.name" #title="ngModel">
+                </div>                      
+            </div>
+            <div class="modal-footer">
+                 <button type="submit" (click)="createStamp()" class="fcbtn btn btn-primary btn-outline btn-1f">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>

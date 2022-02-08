@@ -10,7 +10,7 @@ export class BookService {
 
   constructor(private http: HttpClient) { }
 
-  createAccount(data) {
+  createBook(data) {
     return this.http.post(baseUrl, data)
   }
 
