@@ -6,7 +6,7 @@ const { QueryTypes, Op } = require('sequelize');
 // Create a new Book
 exports.create = async (req, res) => {
 	const bookData = req.body
-	if (!bookData.code || !bookData.serialNumber || !bookData.name) {
+	if (!bookData.code || !bookData.serialNumber || !bookData.name || !bookData.transaction) {
 		res.status(400).send({
 			message: "A required field is missing!"
 		});
@@ -17,7 +17,8 @@ exports.create = async (req, res) => {
         const book = {
             code: bookData.code,
             serialNumber: bookData.serialNumber,
-            name: bookData.name
+            name: bookData.name,
+			transaction: bookData.transaction,
         }
         await Book.create(book)
         res.status(201).send({ message: 'Created a book successfully' })
