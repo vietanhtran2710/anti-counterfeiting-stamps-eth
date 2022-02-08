@@ -22,6 +22,17 @@ export class StampService {
     this.contract = await new this.web3.eth.Contract(this.contractABI, this.contractAddress);
   }
 
+  async getEthBalance(address) {
+    await this.initWeb3();
+    const that = this;
+    return new Promise((resolve, reject) => {
+      that.web3.eth.getBalance(address)
+      .then(function(result) {
+        return resolve(result);
+      })
+    })
+  }
+
   async addCreator(address, currentAccount) {
     await this.initWeb3();
     const that = this;

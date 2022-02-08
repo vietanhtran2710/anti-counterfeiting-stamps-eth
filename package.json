@@ -21,6 +21,11 @@
   "homepage": "https://github.com/vietanhtran2710/anti-counterfeiting-stamps-eth#readme",
   "dependencies": {
     "@openzeppelin/contracts": "^4.4.2",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.15.1",
     "web3-utils": "^1.7.0"
   }
 }
