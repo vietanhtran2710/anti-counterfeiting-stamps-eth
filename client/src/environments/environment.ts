@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  adminAddress: '0xe5B74473Ce398c62FD19b24F6aBB3f6862B76071',
+  stampAssress: '0x389f82182390481b4EEAD962582a60e830A0A5eE',
+  applicationID: '9TSk4vsJmWzR2ipxj2Ie16QCgOYCOVnMF81UPuaN',
+  serverURL: 'https://kwuqcudkvkxr.usemoralis.com:2053/server',
 };
 
 /*
