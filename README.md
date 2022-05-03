@@ -31,6 +31,7 @@ Please check the `test.js` file for more information about how the smart contrac
 
 ## JavaScript service to call smart contract functions on the blockchain
 ```javascript
+// client/src/app/services/stamp/stamp.service.ts
 import { Injectable } from '@angular/core';
 import Moralis from 'moralis';
 import { environment } from 'src/environments/environment';
